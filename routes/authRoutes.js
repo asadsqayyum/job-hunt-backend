@@ -21,7 +21,7 @@ router.post('/register', async (req, res)=>{
         await user.save();
 
         const payload = {user: {id:  user.id}}
-        const token =  jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1h'});
+        const token =  jwt.sign(payload, "your_jwt_secret", {expiresIn: '1h'});
         res.json({token});
 
     }
@@ -44,7 +44,7 @@ router.post('/login', async (req, res)=>{
         const isMatch = await bcrypt.compare(password, user.password);
         if (!isMatch) return res.status(400).json({msg: "Invalid credentials"});
         const payload = { id: user.id }; // ✅ flat payload
-        const token = jwt.sign(payload, process.env.JWT_SECRET, {expiresIn: '1h'}); 
+        const token = jwt.sign(payload, "your_jwt_secret", {expiresIn: '1h'}); 
         res.json({token});
     }
     catch(err) {
